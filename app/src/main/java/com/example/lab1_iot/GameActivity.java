@@ -1,5 +1,6 @@
 package com.example.lab1_iot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,16 @@ public class GameActivity extends AppCompatActivity {
         lettersGrid = findViewById(R.id.letters_grid);
         letterViews = new ArrayList<>();
 
+        ImageView statsIcon = findViewById(R.id.stats_icon);
+        statsIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Lanzar la nueva actividad de estadísticas
+                Intent intent = new Intent(GameActivity.this, StatisticsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         setupNewGame();
 
         Button newGameButton = findViewById(R.id.btn_new_game);
@@ -67,6 +78,8 @@ public class GameActivity extends AppCompatActivity {
         // Genera los botones de letras
         setupLetterButtons();
     }
+
+
 
     private void setupWordLayout() {
         LinearLayout wordLayout = findViewById(R.id.word_layout);
@@ -139,6 +152,14 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+
+    private List<String> gameResults = new ArrayList<>();
+
+    // Método para registrar el resultado de un juego
+    private void registerGameResult(String result) {
+        gameResults.add(result);  // Añadir el resultado al ArrayList
+    }
+
     private void checkGameStatus() {
         boolean won = true;
 
@@ -148,11 +169,13 @@ public class GameActivity extends AppCompatActivity {
                 break;
             }
         }
+        List<String> gameHistory = new ArrayList<>();
 
         if (won) {
             Toast.makeText(this, "¡Ganaste!", Toast.LENGTH_LONG).show();
             disableAllButtons();
             showElapsedTime(true);
+
 
         } else if (wrongGuesses >= maxGuesses) {
             Toast.makeText(this, "¡Perdiste!", Toast.LENGTH_LONG).show();
@@ -180,10 +203,18 @@ public class GameActivity extends AppCompatActivity {
         int seconds = (int) (elapsedTime / 1000);
         String resultMessage = w ? "Ganaste" : "Perdiste";
 
+
         // Actualizar el TextView con el tiempo transcurrido
         timeTextView.setText(resultMessage + " / Termino: " + seconds + " s");
     }
 
+    public List<String> getGameResults() {
+        return gameResults;
+    }
+
+
 
 
 }
+
+
