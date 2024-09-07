@@ -25,11 +25,16 @@ public class GameActivity extends AppCompatActivity {
     private int wrongGuesses;
     private int maxGuesses = 6;
 
+    private long startTime; // Para almacenar el tiempo de inicio
+    private TextView timeTextView; // Referencia al TextView que mostrará el tiempo
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        timeTextView = findViewById(R.id.timeTextView);
         towerImage = findViewById(R.id.tower_image);
         lettersGrid = findViewById(R.id.letters_grid);
         letterViews = new ArrayList<>();
@@ -46,6 +51,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupNewGame() {
+
+        startTime = System.currentTimeMillis(); // antes almacenare el tiempo
+
         // Escoge una palabra al azar
         selectedWord = words[new Random().nextInt(words.length)];
         wrongGuesses = 0;
@@ -122,8 +130,8 @@ public class GameActivity extends AppCompatActivity {
 
         if (towerImage != null) {
             // Cambia el tamaño del ImageView aquí
-            towerImage.getLayoutParams().width = 750;  // Ajusta el ancho (por ejemplo, 300px)
-            towerImage.getLayoutParams().height = 750; // Ajusta el alto (por ejemplo, 300px)
+            towerImage.getLayoutParams().width = 600;  // Ajusta el ancho (por ejemplo, 300px)
+            towerImage.getLayoutParams().height = 600; // Ajusta el alto (por ejemplo, 300px)
             towerImage.requestLayout();
         if (wrongGuesses <= maxGuesses) {
             towerImage.setImageResource(towerImages[wrongGuesses - 1]);
@@ -143,8 +151,39 @@ public class GameActivity extends AppCompatActivity {
 
         if (won) {
             Toast.makeText(this, "¡Ganaste!", Toast.LENGTH_LONG).show();
+            disableAllButtons();
+            showElapsedTime(true);
+
         } else if (wrongGuesses >= maxGuesses) {
             Toast.makeText(this, "¡Perdiste!", Toast.LENGTH_LONG).show();
+            disableAllButtons();
+            showElapsedTime(false);
         }
     }
+
+    // esto sirve para desactivar los botones cuando perdamos
+    private void disableAllButtons() {
+        // Recorre todos los botones del GridLayout
+        for (int i = 0; i < lettersGrid.getChildCount(); i++) {
+            View view = lettersGrid.getChildAt(i);
+            if (view instanceof Button) {
+                view.setEnabled(false); // Deshabilitar el botón
+            }
+        }
+    }
+    // metodo para calcular el tiempo
+    private void showElapsedTime(boolean w) {
+        // Obtener el tiempo actual y calcular la diferencia
+        long elapsedTime = System.currentTimeMillis() - startTime;
+
+        // Convertir el tiempo a segundos
+        int seconds = (int) (elapsedTime / 1000);
+        String resultMessage = w ? "Ganaste" : "Perdiste";
+
+        // Actualizar el TextView con el tiempo transcurrido
+        timeTextView.setText(resultMessage + " / Termino: " + seconds + " s");
+    }
+
+
+
 }
