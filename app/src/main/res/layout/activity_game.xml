@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
+        <!-- Barra superior con ícono de estadísticas y texto TeleGame -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+            <ImageView
+                    android:id="@+id/back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_media_previous"
+                    android:contentDescription="Back"/>
+
+            <ImageView
+                    android:id="@+id/stats_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_info_details"
+                    android:contentDescription="Stats"/>
+        </LinearLayout>
+
+        <!-- Imagen de la torre del ahorcado -->
+
+        <!-- Vista donde se mostrará la palabra oculta -->
+        <ImageView
+                android:id="@+id/tower_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/tower_image" android:rotationX="0"/>
+
+
+        <LinearLayout
+                android:id="@+id/word_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+            <!-- Aquí se mostrarán los guiones y las letras adivinadas -->
+        </LinearLayout>
+
+        <!-- Botones de letras del abecedario -->
+        <GridLayout
+                android:id="@+id/letters_grid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:rowCount="4"
+                android:columnCount="7"
+                android:layout_gravity="center">
+
+            <!-- Aquí se colocarán los botones de letras dinámicamente desde el código Java -->
+        </GridLayout>
+
+        <!-- Botón para iniciar un nuevo juego -->
+        <Button
+                android:id="@+id/btn_new_game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nuevo Juego"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#00796B"
+                android:textColor="#FFFFFF"/>
+        <TextView
+                android:id="@+id/tv_game_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TeleGame"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center"/>
+    </LinearLayout>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
